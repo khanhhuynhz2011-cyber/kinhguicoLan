@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lá thư gửi cô</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--bg:#ffe9f0;--paper:#fbfbf8;--line:#d7dbe3;--ink:#1f2fa6;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#2a1a22;--paper:#2e2933;--line:#443d4d;--ink:#a9b6ff}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);display:flex;justify-content:center;padding:16px;overflow-x:hidden}
+.sheet{
+  width:100%;max-width:720px;min-height:80vh;border-radius:10px;
+  box-shadow:0 10px 30px rgba(255,122,168,.3);
+  padding:0 20px 40px;
+  font-family:"Dancing Script","Segoe Script","Bradley Hand",cursive;
+  font-weight:500;color:var(--ink);
+  font-size:clamp(19px,5vw,25px);line-height:2.1;
+  background-color:var(--paper);
+ background-image:linear-gradient(to bottom,transparent calc(2.1em - 1px),var(--line) calc(2.1em - 1px));
+background-size:100% 2.1em;
+background-position:0 -0.35em;
+}
+p{margin:0;text-indent:2em}
+.cur{display:inline-block;width:2px;height:1em;background:var(--ink);margin-left:2px;vertical-align:text-bottom;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.cur{animation:none}}
+</style>
+</head>
+<body>
+<div class="sheet" id="sheet"></div>
+
+<script>
+const SPEED = 22;   // ms cho mỗi ký tự: số càng nhỏ chữ chạy càng nhanh
+
+const PARAS = [
+ "Trong Tin học, Bit là đơn vị nhỏ nhất để lưu trữ dữ liệu, còn Byte giúp chúng em đo lường những thông tin lớn hơn. Thế nhưng, có lẽ chẳng có đơn vị đo lường nào đủ lớn, chẳng có bộ nhớ nào đủ rộng để lưu giữ trọn vẹn sự tận tâm, những yêu thương và tình cảm mà cô đã dành cho tập thể 10A12. Bởi những điều cô trao đi không chỉ nằm trong từng bài giảng, mà còn đọng lại trong những kỷ niệm, những lời động viên và cả những khoảnh khắc giản dị mà chúng em sẽ luôn trân trọng.",
+
+ "Nhân ngày Nhà giáo Việt Nam 20/11, tập thể 10A12 xin gửi đến cô những lời chúc tốt đẹp và chân thành nhất. Chúc cô luôn xinh đẹp, trẻ trung, mạnh khỏe, hạnh phúc và mãi giữ được nụ cười rạng rỡ trên môi. Mong rằng mỗi ngày đến trường của cô đều là một ngày ngập tràn niềm vui, mỗi tiết học đều mang đến những tiếng cười, và mọi vất vả trong hành trình gieo chữ đều được đền đáp bằng thật nhiều yêu thương, sự kính trọng và những thành quả đáng tự hào của học trò. Cảm ơn cô vì đã luôn dịu dàng, kiên nhẫn và tận tâm với chúng em qua từng tiết học. Cảm ơn cô vì những lần giảng bài thật dễ hiểu, những lời nhắc nhở đầy yêu thương và cả sự bao dung dành cho những lúc chúng em còn chưa ngoan, chưa hiểu bài hay mắc phải những lỗi sai. Có thể đôi khi chúng em chưa thể hiện hết lòng biết ơn của mình, nhưng chúng em luôn trân trọng những điều cô đã âm thầm dành cho lớp.",
+
+ "Nếu mỗi bài học là một dòng dữ liệu quý giá, thì những kỷ niệm cùng cô chính là những tệp tin đẹp nhất mà 10A12 muốn lưu giữ thật lâu trong bộ nhớ thanh xuân của mình. Và dù thời gian có trôi qua, những bài học, những lời yêu thương cùng hình ảnh cô trên bục giảng vẫn sẽ là một phần thật đẹp trong những năm tháng học trò của chúng em.",
+
+ "Một lần nữa, 10A12 kính chúc cô có một ngày 20/11 thật ý nghĩa, thật hạnh phúc và ngập tràn yêu thương. Mong cô luôn vui vẻ, bình an và tiếp tục đồng hành cùng thật nhiều thế hệ học trò trên hành trình trưởng thành.",
+
+ "10A12 yêu cô nhiều lắm! Chúc cô 20/11 thật vui vẻ và hạnh phúc! "
+];
+
+const sheet = document.getElementById('sheet');
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const cur = document.createElement('span');
+cur.className = 'cur';
+
+// Tự cuộn theo con trỏ khi chữ chạy gần cuối màn hình
+function follow() {
+  const r = cur.getBoundingClientRect();
+  if (r.bottom > innerHeight * 0.75) {
+    scrollBy({ top: r.bottom - innerHeight * 0.5, behavior: 'smooth' });
+  }
+}
+
+async function run() {
+  await sleep(800);
+  let count = 0;
+  for (const text of PARAS) {
+    const p = document.createElement('p');
+    const node = document.createTextNode('');
+    p.append(node, cur);
+    sheet.appendChild(p);
+
+    let s = '';
+    for (const ch of Array.from(text)) {
+      s += ch;
+      node.data = s;
+      if (++count % 10 === 0) follow();
+      await sleep(/[.!?]/.test(ch) ? SPEED * 6 : SPEED);   // nghỉ lâu hơn ở cuối câu
+    }
+    await sleep(500);                                       // nghỉ giữa các đoạn
+  }
+  cur.remove();
+}
+
+run();
+</script>
+</body>
+</html>

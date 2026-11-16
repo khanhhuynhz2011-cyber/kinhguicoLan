@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thiệp 20/11 gửi cô giáo tin học</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--bg:#ffe9f0;--card:#fff;--ink:#5b3a4a;--accent:#ff7aa8;--soft:#ffc2d6;--term:#3b2430;--termink:#ffffff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.paper-card.garden{position:relative;margin-top:38px;padding-top:34px}
+.sticker{position:absolute;top:-50px;width:96px;height:auto;pointer-events:none;transform-origin:50% 90%;animation:wobble 2.4s ease-in-out infinite;filter:drop-shadow(0 3px 4px rgba(0,0,0,.18))}
+.sticker.l{left:-6px;--tilt:-9deg}
+.sticker.r{right:-6px;--tilt:8deg;border:3px solid #fff;border-radius:18px;animation-delay:-1.2s}
+@keyframes wobble{0%,100%{transform:rotate(calc(var(--tilt) - 4deg))}50%{transform:rotate(calc(var(--tilt) + 4deg))}}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#2a1a22;--card:#3d2631;--ink:#ffe3ec;--soft:#7a3a55;--term:#1c1117}}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:"Nunito",system-ui,sans-serif;font-weight:600;display:flex;align-items:center;justify-content:center;overflow-x:hidden}
+.scene{display:none;width:100%;max-width:560px;padding:20px;text-align:center;animation:fade .6s ease}
+.scene.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+h1,.script{font-family:"Pacifico",cursive;font-weight:400;color:var(--accent);margin:.2em 0}
+h1{font-size:clamp(28px,7vw,40px)}
+
+/* ===== Phong bì (đã sửa) ===== */
+.env{position:relative;isolation:isolate;width:280px;height:190px;margin:70px auto 24px;cursor:pointer;border:0;background:none;padding:0;display:block}
+.env .back{position:absolute;inset:0;background:var(--accent);border-radius:10px;z-index:0}
+.env .paper{position:absolute;left:14px;right:14px;top:10px;height:150px;background:#fffdf7;border-radius:8px;transition:transform .8s ease .5s;display:flex;align-items:center;justify-content:center;font-size:44px;z-index:2;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.env .front{position:absolute;inset:0;border-radius:10px;background:linear-gradient(180deg,#ff9bbd,#ff86b0);clip-path:polygon(0 0,50% 110px,100% 0,100% 100%,0 100%);pointer-events:none;z-index:3}
+.env .flap{position:absolute;left:0;right:0;top:0;height:110px;background:#ff5f93;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .6s ease,z-index 0s linear .3s;z-index:4}
+.env .heart{position:absolute;left:50%;top:84px;transform:translateX(-50%);font-size:28px;z-index:5;transition:opacity .3s}
+.env.open .flap{transform:rotateX(180deg);z-index:1}
+.env.open .paper{transform:translateY(-70px)}
+.env.open .heart{opacity:0}
+.hint{animation:bob 1.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px)}}
+
+/* ===== Thẻ ===== */
+.paper-card{background:var(--card);border-radius:22px;padding:26px 22px;box-shadow:0 10px 30px rgba(255,122,168,.25)}
+.btn{font:inherit;font-weight:800;background:var(--accent);color:#fff;border:0;border-radius:99px;padding:12px 26px;font-size:17px;cursor:pointer;margin-top:14px;box-shadow:0 4px 0 #d85a88}
+.btn:active{transform:translateY(3px);box-shadow:none}
+
+/* ===== Thẻ lật ===== */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.fc{perspective:700px;border:0;background:none;padding:0;aspect-ratio:3/4;cursor:pointer;font:inherit;color:inherit}
+.fc .in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .6s}
+.fc.flip .in{transform:rotateY(180deg)}
+.fc .f,.fc .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;display:flex;align-items:center;justify-content:center;padding:8px}
+.fc .f{background:var(--soft);font-size:44px;box-shadow:0 5px 0 rgba(0,0,0,.08)}
+.fc .b{background:var(--card);border:2px solid var(--accent);transform:rotateY(180deg);font-size:clamp(11px,2.9vw,14px);line-height:1.35}
+.fc:not(.flip):hover .in{transform:rotate(-4deg) scale(1.04)}
+.count{font-weight:800}
+.term{background:var(--term);color:var(--termink);font-family:ui-monospace,Menlo,Consolas,monospace;text-align:left;border-radius:12px;padding:14px;font-size:14px;line-height:1.6;margin-top:14px;min-height:5.6em;white-space:pre-wrap}
+.petal{position:fixed;top:-40px;pointer-events:none;animation:fall linear forwards;z-index:9}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<section class="scene on" id="s1">
+  <div class="script" style="font-size:22px">Có một phong bì nhỏ gửi đến cô…</div>
+  <button class="env" id="env" aria-label="Mở phong bì">
+    <div class="back"></div><div class="paper">💌</div><div class="front"></div><div class="flap"></div><div class="heart">💗</div>
+  </button>
+  <div class="hint">👆 Cô bấm vào phong bì nhé!</div>
+</section>
+
+<section class="scene" id="s2">
+  <div class="paper-card">
+    <h1>Chúc mừng 20/11!</h1>
+    <p>Gửi cô giáo tin học yêu quý của chúng em 🌸<br>Em có một khu vườn nhỏ muốn tặng cô. Mỗi bông hoa giấu một lời cảm ơn, cô hái thử nha!</p>
+    <button class="btn" id="go">Vào vườn hoa 🌷</button>
+  </div>
+</section>
+
+<section class="scene" id="s3">
+    <div class="paper-card garden">
+    <img class="sticker l" src="chikawa-trong-suot.png" alt="">
+    <img class="sticker r" src="chikawa2.jpg" alt="">
+  <div class="paper-card">
+    <div class="script" style="font-size:26px">Vườn hoa tặng cô</div>
+    <div class="count" id="count">Đã hái 0/6 bông</div>
+    <div class="grid" id="grid"></div>
+    <div id="end" hidden>
+      <div class="term" id="term"></div>
+      <button class="btn" id="toLetter" hidden>Mở lá thư 💌</button>
+    </div>
+  </div>
+</section>
+
+<script>
+const MSGS=[
+ ["🌸","Cảm ơn cô đã kiên nhẫn giảng lại từng bài ạ 💻"],
+ ["🌷","Cảm ơn cô đã cứu tụi em khỏi những “lỗi đỏ chót” 🛠️"],
+ ["🌼","Giờ tin học là giờ tụi em mong nhất đó cô 💖"],
+ ["🌻","Cô dạy em: sai thì sửa lại, không sao hết 🌱"],
+ ["🪻","Chúc cô luôn khỏe, luôn cười thật tươi ☀️"],
+ ["🌹","Mãi yêu cô, cô giáo tuyệt vời nhất! 🌟"]
+];
+
+const $ = id => document.getElementById(id);
+const show = id => {
+  document.querySelectorAll('.scene').forEach(s => s.classList.toggle('on', s.id === id));
+};
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+/* ---------- Phong bì ---------- */
+$('env').onclick = () => {
+  $('env').classList.add('open');
+  setTimeout(() => show('s2'), 1700);
+};
+$('go').onclick = () => show('s3');
+$('toLetter').onclick = () => { location.href = 'la-thu.html'; };
+/* ---------- Vườn hoa ---------- */
+let n = 0;
+MSGS.forEach(([e, t]) => {
+  const b = document.createElement('button');
+  b.className = 'fc';
+  b.setAttribute('aria-label', 'Hái hoa');
+  b.innerHTML = '<div class="in"><div class="f">' + e + '</div><div class="b">' + t + '</div></div>';
+  b.onclick = () => {
+    if (b.classList.contains('flip')) return;
+    b.classList.add('flip');
+    n++;
+    $('count').textContent = 'Đã hái ' + n + '/' + MSGS.length + ' bông';
+    if (n === MSGS.length) finish();
+  };
+  $('grid').appendChild(b);
+});
+
+/* ---------- Cánh hoa rơi ---------- */
+function petals() {
+  const E = ['🌸', '💗', '🌷', '✨', '🌼'];
+  for (let i = 0; i < 28; i++) {
+    const p = document.createElement('span');
+    p.className = 'petal';
+    p.textContent = E[i % E.length];
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.fontSize = (16 + Math.random() * 16) + 'px';
+    p.style.animationDuration = (3 + Math.random() * 3) + 's';
+    p.style.animationDelay = Math.random() * 1.5 + 's';
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 8000);
+  }
+}
+
+/* ---------- Hiệu ứng gõ rồi xóa ---------- */
+async function typeEffect(t) {
+  const a = [];
+  const hien = () => t.textContent = a.join('') + '▌';
+
+  const go = async chu => {
+    for (const ch of Array.from(chu)) { a.push(ch); hien(); await sleep(40); }
+  };
+  const xoa = async () => {
+    while (a.length) { a.pop(); hien(); await sleep(30); }
+  };
+
+  await go('Sau khi ghé thăm vườn hoa của chúng em\n' +
+           'Chúng em cũng có vài lời muốn gửi đến cô\n' +
+           '....giao bài tập ít thôi nha cô ❤');
+  await sleep(1400);
+  await xoa();
+  await sleep(500);
+  await go('Lộn tí , đây mới đúng nè');
+  t.textContent = a.join('');
+    await sleep(600);
+  $('toLetter').hidden = false;
+  $('toLetter').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+/* ---------- Kết thúc ---------- */
+function finish() {
+  setTimeout(() => {
+    $('end').hidden = false;
+    petals();
+    typeEffect($('term'));
+    $('end').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 500);
+   
+}
+</script>
+</body>
+</html>
